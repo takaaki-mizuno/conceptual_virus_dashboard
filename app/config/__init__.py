@@ -9,9 +9,9 @@ class Config(BaseSettings):
     DB_PASSWORD: str = os.getenv("DB_PASSWORD", "")
     DB_HOST: Union[AnyHttpUrl,
                    IPvAnyAddress] = os.getenv("DB_HOST", "127.0.0.1")
-    DB_NAME: str = 'conceptual_virus'
+    DB_NAME: str = os.getenv("DB_NAME", "conceptual_virus")
 
-    SQLALCHEMY_DATABASE_URI = f"postgresql://{{DB_USERNAME}}:{{DB_PASSWORD}}@{{DB_HOST}}/{{DB_NAME}}"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 
 
-config = Config()
+config = Config(_env_file='.env', _env_file_encoding='utf-8')
