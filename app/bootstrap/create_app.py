@@ -1,5 +1,6 @@
+from http.routes.api import api_creatures, api_dashboard
+
 from fastapi import FastAPI
-from routes.api import api_creatures, api_dashboard
 
 
 def create_app():
