@@ -1,3 +1,4 @@
+import json
 import time
 from typing import Optional, Tuple
 
@@ -30,7 +31,7 @@ class CreatureService(object):
 
         return creature, snapshot
 
-    def register_creature(self, db: Session, ip_address: str, identity_key: str, status: dict) -> Optional[
+    def register_creature(self, db: Session, ip_address: str, identity_key: str, status: list) -> Optional[
         Tuple[Creature, Snapshot]]:
         current_time = int(time.time())
         creature = db.query(Creature).filter(Creature.ip_address == ip_address, Creature.is_active == True).first()
@@ -41,13 +42,13 @@ class CreatureService(object):
             else:
                 db.query(Creature).filter(Creature.id == creature.id).update({"is_active": False})
                 creature = Creature(ip_address=ip_address, identity_key=identity_key, last_ping_sent_at=current_time,
-                                    first_ping_send_at=current_time, is_active=True)
+                                    first_ping_sent_at=current_time, is_active=True)
                 db.add(creature)
                 db.commit()
                 db.refresh(creature)
         else:
             creature = Creature(ip_address=ip_address, identity_key=identity_key, last_ping_sent_at=current_time,
-                                first_ping_send_at=current_time, is_active=True)
+                                first_ping_sent_at=current_time, is_active=True)
             db.add(creature)
             db.commit()
             db.refresh(creature)
