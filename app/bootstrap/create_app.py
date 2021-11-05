@@ -1,5 +1,4 @@
-from http.routes.api import api_creatures, api_dashboard
-
+from api.routes.api import api_creatures, api_dashboard
 from fastapi import FastAPI
 
 
