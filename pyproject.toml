@@ -6,11 +6,13 @@ authors = ["Takaaki Mizuno <takaaki.mizuno@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = {extras = ["all"], version = "^0.70.0"}
 SQLAlchemy = "^1.4.26"
 pydantic = "^1.8.2"
 alembic = "^1.7.4"
 psycopg2 = "^2.9.1"
+fastapi = "^0.70.0"
+python-dotenv = "^0.19.2"
+uvicorn = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

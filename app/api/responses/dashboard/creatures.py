@@ -8,6 +8,4 @@ class Creatures(Response):
         for creature in self._data:
             result.append(CreatureSummary(creature).to_dict())
 
-        return {
-            "creatures": result
-        }
+        return {"creatures": result}
