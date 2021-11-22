@@ -24,7 +24,7 @@ async def creatures(db: Session = Depends(get_db)):
 async def creature(db: Session = Depends(get_db), *, creature_id: int):
     service = CreatureService()
     _creature, snapshot = service.get_creature(db, creature_id)
-    response = Creature(_creature).to_dict()
+    response = Creature(_creature, snapshot).to_dict()
 
     return JSONResponse(status_code=status_code.HTTP_200_OK,
                         content=response)
