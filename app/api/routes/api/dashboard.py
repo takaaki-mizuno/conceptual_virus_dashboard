@@ -1,10 +1,10 @@
-from database import get_db
 from fastapi import APIRouter, Depends, Query
 from fastapi import status as status_code
 from fastapi.responses import JSONResponse
-from services import CreatureService
 from sqlalchemy.orm import Session
 
+from ....database import get_db
+from ....services import CreatureService
 from ...responses.dashboard import Creature, Creatures, CreatureSummary
 
 api_dashboard = APIRouter()

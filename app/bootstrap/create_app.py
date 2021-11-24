@@ -1,6 +1,7 @@
-from api.routes.api import api_creatures, api_dashboard
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from ..api.routes.api import api_creatures, api_dashboard
 
 
 def create_app():

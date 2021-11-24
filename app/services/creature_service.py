@@ -2,9 +2,10 @@ import json
 import time
 from typing import Optional, Tuple
 
-from models import Creature, Snapshot
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
+
+from ..models import Creature, Snapshot
 
 
 class CreatureService(object):
@@ -24,7 +25,7 @@ class CreatureService(object):
         creature = db.query(Creature).filter(
             Creature.id == creature_id,
             Creature.last_ping_sent_at > threshold_time,
-            Creature.is_active == True).first()
+            Creature.is_active).first()
         if creature is None:
             return None
 

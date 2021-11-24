@@ -1,5 +1,6 @@
-from ..response import Response
 from typing import Any
+
+from ..response import Response
 
 
 class Creature(Response):
