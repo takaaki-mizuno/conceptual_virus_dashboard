@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from ..models import Creature, Snapshot
+from ..models import Creature, Snapshot, Virus
 
 
 class CreatureService(object):
@@ -29,14 +29,18 @@ class CreatureService(object):
         if creature is None:
             return None
 
+        snapshot = self.get_snapshot(db, creature_id)
+        return creature, snapshot
+
+    def get_snapshot(self, db: Session, creature_id: int) -> Optional[Snapshot]:
         snapshot = db.query(Snapshot).filter(
             Snapshot.creature_id == creature_id).order_by(
-                desc(Snapshot.sent_at)).first()
+            desc(Snapshot.sent_at)).first()
 
         if snapshot is None:
             return None
 
-        return creature, snapshot
+        return snapshot
 
     def register_creature(self, db: Session, ip_address: str,
                           identity_key: str,
@@ -81,3 +85,19 @@ class CreatureService(object):
         db.refresh(snapshot)
 
         return creature, snapshot
+
+    def get_virus(self, db: Session, _hash: str) -> Virus:
+        virus = db.query(Virus).filter(
+            Virus.hash == _hash).first()
+
+        return virus
+
+    def set_virus(self, db: Session, _hash: str, sequence: str) -> Virus:
+        virus = Virus(hash=_hash, code=sequence)
+        db.add(virus)
+        db.commit()
+
+        virus = db.query(Virus).filter(
+            Virus.hash == _hash).first()
+
+        return virus
