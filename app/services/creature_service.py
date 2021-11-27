@@ -14,9 +14,15 @@ class CreatureService(object):
     def get_active_creatures(self, db: Session) -> [Creature]:
         current_time = int(time.time())
         threshold_time = current_time - self.THRESHOLD_DURATION
-        return db.query(Creature).filter(
+        creatures = db.query(Creature).filter(
             Creature.last_ping_sent_at > threshold_time,
             Creature.is_active == True).all()
+        result = []
+        for creature in creatures:
+            snapshot = self.get_snapshot(db, creature.id)
+            result.append((creature, snapshot))
+
+        return result
 
     def get_creature(self, db: Session,
                      creature_id: int) -> Optional[Tuple[Creature, Snapshot]]:

@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from ....api.requests import StatusUpdate
 from ....database import get_db
 from ....services import CreatureService
-from ...responses.dashboard import Creature, Creatures, CreatureSummary
+
 
 api_creatures = APIRouter()
 logger = logging.getLogger(__name__)
@@ -25,6 +25,4 @@ async def status(
     _creature, _snapshot = service.register_creature(db, status_update.i,
                                                      status_update.k, _status)
 
-    response = Creature(_creature, _snapshot).to_dict()
-
-    return JSONResponse(status_code=status_code.HTTP_200_OK, content=response)
+    return JSONResponse(status_code=status_code.HTTP_200_OK, content={"status": "ok"})
